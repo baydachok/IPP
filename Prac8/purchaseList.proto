@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+service PurchaseService {
+    rpc GetAll (Empty) returns (PurchaseList) {}
+    rpc Get (PurchaseRequestId) returns (Purchase) {} 
+    rpc Insert (Purchase) returns (Purchase) {} 
+    rpc Update (Purchase) returns (Purchase) {} 
+    rpc Remove (PurchaseRequestId) returns (Empty) {}
+    rpc SetPurchased (PurchaseStatus) returns (Purchase) {}
+}
+
+message Empty {}
+
+message Purchase {
+    string id = 1; 
+    string name = 2; 
+    int32 count = 3;
+    bool purchased = 4;
+}
+
+message PurchaseList {
+    repeated Purchase purchases = 1;
+}
+
+message PurchaseRequestId {
+    string id = 1;
+}
+
+message PurchaseStatus {
+    string id = 1;
+    bool purchased = 2;
+}

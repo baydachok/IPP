@@ -1,0 +1,174 @@
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <title>Список покупок</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <style>
+        .phlist {
+            color: white;
+            border-radius: 30px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            padding-left: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="py-5 text-left">
+            <h2>Список покупок</h2>
+        </div>
+        <table class="table" id="purchases_table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Количество</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each results}}
+                <tr>
+                    <td>{{ id }}</td>
+                    <td>{{ name }}</td>
+                    <td>{{ count }}</td>
+                    <td>
+                        <input style="display: none" type="checkbox" class="btn-check purchased_edit" id="btn-check-outlined_{{id}}" {{#if
+                            purchased}}checked{{/if}} autocomplete="off" data-purchased="{{ purchased }}" data-id="{{ id }}">
+                        <label {{#if
+                            purchased}}style="background-color: #007bff;color: #fff"{{/if}} class="btn btn-outline-primary" for="btn-check-outlined_{{id}}">{{#if
+                            purchased}}Куплено{{else}}Не куплено{{/if}}</label><br>
+                    </td>
+                    <td>
+                        <a href="javascript:void(0);" class="btn btn-sm btn-secondary phbook edit
+phbook" data-id="{{ id }}" data-name="{{ name }}" data-count="{{ count }}">Изменить</a>
+                        <a href="javascript:void(0);" class="btn btn-sm phbook btn-danger remove"
+                            data-id="{{ id }}">Удалить</a>
+                    </td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="5" class="text-center">Нет данных для отображения</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <button class="btn btn-success float-right" data-toggle="modal" data-target="#newPurchaseModal">Добавить
+            покупку</button>
+    </div>
+    <!-- Новое окно добавления покупки -->
+    <form action="/save" method="post">
+        <div class="modal fade" id="newPurchaseModal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Добавление новой покупки</h4>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-control" placeholder="Название"
+                                required="required">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="count" class="form-control" placeholder="Количество"
+                                required="required">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-success phbook">Создать</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Окно редактирования данных покупки-->
+    <form action="/update" method="post">
+        <div class="modal fade" id="editPurchaseModal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Изменить покупку</h4>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-control name" placeholder="Название"
+                                required="required">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="count" class="form-control count" placeholder="Количество"
+                                required="required">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="id" class="purchase_id">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-success phbook">Обновить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Окно удаления покупки из списка-->
+    <form id="add-row-form" action="/remove" method="post">
+        <div class="modal fade" id="removePurchaseModal" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"></h4>Удалить покупку</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        Вы действительно хотите удалить эту покупку?
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="purchase_id" class="form-control purchase_id_removal"
+                            required="required">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-danger phlist">Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form action="/setPurchased" method="post" id="purchased-form">
+        <input type="hidden" name="purchase_id_set" class="purchase_id_set">
+        <input type="hidden" name="purchased" class="purchased"
+                            required="required">
+    </form>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#purchases_table').on('click', '.edit', function () {
+                $('#editPurchaseModal').modal('show');
+                $('.purchase_id').val($(this).data('id'));
+                $('.name').val($(this).data('name'));
+                $('.count').val($(this).data('count'));
+            }).on('click', '.remove', function () {
+                $('#removePurchaseModal').modal('show');
+                $('.purchase_id_removal').val($(this).data('id'));
+            }).on('click', '.purchased_edit', function() {
+                $('.purchased').val($(this).data('purchased'));
+                $('.purchase_id_set').val($(this).data('id'));
+                $('#purchased-form').trigger('submit');
+            });
+        });
+    </script>
+</body>
+
+</html>

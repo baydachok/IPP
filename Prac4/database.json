@@ -1,0 +1,92 @@
+{
+  "libraries": [
+    {
+      "id": 1,
+      "library_name": "Library A",
+      "location": "123 Main St, City A",
+      "schedule": {
+        "Monday": "9:00 AM - 5:00 PM",
+        "Tuesday": "9:00 AM - 5:00 PM",
+        "Wednesday": "9:00 AM - 5:00 PM",
+        "Thursday": "9:00 AM - 5:00 PM",
+        "Friday": "9:00 AM - 5:00 PM"
+      }
+    },
+    {
+      "id": 2,
+      "library_name": "Library B",
+      "location": "456 Elm St, City B",
+      "schedule": {
+        "Monday": "10:00 AM - 6:00 PM",
+        "Tuesday": "10:00 AM - 6:00 PM",
+        "Wednesday": "10:00 AM - 6:00 PM",
+        "Thursday": "10:00 AM - 6:00 PM",
+        "Friday": "10:00 AM - 6:00 PM"
+      }
+    },
+    {
+      "id": 3,
+      "library_name": "Library C",
+      "location": "789 Oak St, City C",
+      "schedule": {
+        "Monday": "11:00 AM - 7:00 PM",
+        "Tuesday": "11:00 AM - 7:00 PM",
+        "Wednesday": "11:00 AM - 7:00 PM",
+        "Thursday": "11:00 AM - 7:00 PM",
+        "Friday": "11:00 AM - 7:00 PM"
+      }
+    }
+  ],
+  "authors": [
+    {
+      "id": 1,
+      "first_name": "John",
+      "second_name": "Doe",
+      "about": "John Doe is a prolific author known for his works in various genres, including science fiction and mystery. He has won several awards for his writing and continues to captivate readers with his storytelling."
+    },
+    {
+      "id": 2,
+      "first_name": "Alice",
+      "second_name": "Smith",
+      "about": "Alice Smith is an accomplished author of children's books. Her colorful and imaginative stories have delighted young readers for decades. She is also an advocate for literacy and education."
+    },
+    {
+      "id": 3,
+      "first_name": "Robert",
+      "second_name": "Johnson",
+      "about": "Robert Johnson is a renowned historian and biographer. His meticulously researched books on historical figures and events have received critical acclaim and are considered authoritative sources in their respective fields."
+    }
+  ],
+  "books": [
+    {
+      "id": 1,
+      "book_title": "The Adventure of Sherlock Holmes",
+      "genres": [
+        "Mystery",
+        "Detective",
+        "Crime"
+      ],
+      "author_id": 1,
+      "library_id": 1
+    },
+    {
+      "id": 2,
+      "book_title": "Alice's Adventures in Wonderland",
+      "genres": [
+        "Fantasy",
+        "Children's"
+      ],
+      "author_id": 2,
+      "library_id": 2
+    },
+    {
+      "id": 8,
+      "book_title": "Test book",
+      "genres": [
+        "Test Genre"
+      ],
+      "author_id": 3,
+      "library_id": 3
+    }
+  ]
+}
